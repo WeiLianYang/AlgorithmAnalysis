@@ -37,7 +37,9 @@ data class ListNode(
 )
 
 /**
- * 第一种
+ * 第一种：没有考虑链表长度，存在溢出情况
+ * @param l1 链表1
+ * @param l2 链表2
  */
 fun addTwoNumbers1(l1: ListNode?, l2: ListNode?): ListNode {
     println(l1)
@@ -63,7 +65,11 @@ fun addTwoNumbers1(l1: ListNode?, l2: ListNode?): ListNode {
     return numberToNode(sum)
 }
 
-
+/**
+ * 链表中的节点值展开为集合
+ * @param node 链表
+ * @param list 集合
+ */
 fun flatNodeValue(node: ListNode?, list: ArrayList<Int>): ArrayList<Int> {
     if (node == null) {
         return list
@@ -72,6 +78,10 @@ fun flatNodeValue(node: ListNode?, list: ArrayList<Int>): ArrayList<Int> {
     return flatNodeValue(node.next, list)
 }
 
+/**
+ * 对链表中的数求和
+ * @param list
+ */
 fun sumNodeValue(list: ArrayList<Int>): Int {
     var sum = 0
     list.forEachIndexed { index, value ->
@@ -81,6 +91,9 @@ fun sumNodeValue(list: ArrayList<Int>): Int {
     return sum
 }
 
+/**
+ * 将数字转为链表
+ */
 fun numberToNode(number: Int): ListNode {
     val source = number.toString().reversed()
     println("source: $source")
@@ -103,6 +116,32 @@ fun numberToNode(number: Int): ListNode {
 
     return firstNode!!
 }
+
+/**
+ * 第二种：解决第一种中的溢出情况，其实就是解决大数相加问题：
+ *
+ * 1. 将对应位的数字逆序相加，然后存到数组中
+ * 2. 检查数组中的各项如果 >=10，就将该项 /10=十位上的数，再累加到后一项。将该项对 %10=个位，重新赋值给当前项
+ * 3. 最后再逆序组装获得链表
+ */
+fun addTwoNumbers2(l1: ListNode?, l2: ListNode?): ListNode {
+    println(l1)
+    println(l2)
+
+    println("---------> start <---------")
+
+    val list1 = arrayListOf<Int>()
+    val list2 = arrayListOf<Int>()
+
+    flatNodeValue(l1, list1)
+    flatNodeValue(l2, list2)
+
+    println(list1)
+    println(list2)
+
+    return ListNode()
+}
+
 
 fun main() {
     val node11 = ListNode(1)
